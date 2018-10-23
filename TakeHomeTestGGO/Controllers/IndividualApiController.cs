@@ -58,34 +58,45 @@ namespace TakeHomeTestGGO.Controllers
         }
 
         // This method should be merging between two individual
-        [HttpGet]
-        public int Merge(int firstPerson , int secondPerson)
+        [HttpPost]
+        public int Merge(int[] array)
         {
-
-            Console.WriteLine(ListIndividual.Count);
-            List<IndividualAddress> individualAddresses = new List<IndividualAddress>();
-            individualAddresses.Add(IndividualAddress.listIndividualAddress.Find(x => x.RecordNumber.Equals(secondPerson)));
-
-            IndividualAddress.listIndividualAddress.Remove(individualAddresses[0]);
-
-            List<Address> addresses = new List<Address>();
-            addresses.Add(Address.listAddress.Find(x => x.AddressId.Equals(individualAddresses[0].AddressId)));
+            int firstPerson = 0;
+            int secondPerson = 0;
+            string streetName = "";
 
             List<Individual> individuals = new List<Individual>();
+
+            foreach (var itemPersons in array)
+            {
+                if(firstPerson == 0)
+                {
+
+                    firstPerson = itemPersons;
+                } else
+                {
+                    List<IndividualAddress> individualAddresses = new List<IndividualAddress>();
+                    List<Address> addresses = new List<Address>();
+
+                    individualAddresses.Add(IndividualAddress.listIndividualAddress.Find(x => x.RecordNumber.Equals(itemPersons)));
+                    IndividualAddress.listIndividualAddress.Remove(individualAddresses[0]);
+
+                    addresses.Add(Address.listAddress.Find(x => x.AddressId.Equals(individualAddresses[0].AddressId)));
+
+                    ListIndividual.Remove(ListIndividual.Find(x => x.RecordNumber.Equals(itemPersons)));
+                    streetName += " - " + addresses[0].StreetName;
+                }
+            }
+
             individuals.Add(ListIndividual.Find(x => x.RecordNumber.Equals(firstPerson)));
             
-            ListIndividual.Remove(ListIndividual.Find(x=> x.RecordNumber.Equals(secondPerson)));
-
-            string streetName = "";
             foreach (Individual item in individuals)
             {
-                streetName = item.GetAddresses() + " - " + addresses[0].StreetName;
+                streetName = item.GetAddresses() + streetName; 
             }
 
             ListIndividual.Find(x => x.RecordNumber.Equals(firstPerson)).addresses = streetName;
-            // ListIndividual[0].addresses = streetName;
-
-
+           
             return 1;
         }
         

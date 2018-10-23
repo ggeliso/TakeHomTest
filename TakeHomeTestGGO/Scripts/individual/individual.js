@@ -82,8 +82,8 @@
     });
 
     $(".k-grid-Add", "#persons").bind("click", function (ev) {
-        if (list.length > 2) {
-            alert("Solo debe seleccionar dos personas");
+        if (list.length < 2) {
+            alert("Debe seleccionar dos o mas personas");
             
         } else {
             var persons = [];
@@ -94,12 +94,12 @@
                
             })
 
-            var url = "/api/individualapi/Merge?firstPerson=" + persons[0] + "&secondPerson=" + persons[1];
+            var url = "/api/individualapi/Merge";
             $.ajax({
                 url: url,
                 contentType: "application/json; charset=utf-8",
-                type: "GET",
-                data: JSON.stringify({}),
+                type: "POST",
+                data: JSON.stringify(persons),
                 complete: function (jqXhr, textStatus) {
                     if (textStatus = 'success') {
                         ds.read();
