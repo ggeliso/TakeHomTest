@@ -101,11 +101,15 @@
                 type: "GET",
                 data: JSON.stringify({}),
                 complete: function (jqXhr, textStatus) {
+                    if (textStatus = 'success') {
+                        ds.read();
+                    }
+                    
                 }
 
             });
         }
-        //ds.read();
+        
     });
 
     ds.read();

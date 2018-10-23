@@ -13,7 +13,7 @@ namespace TakeHomeTestGGO.Controllers
 {
     public class IndividualApiController : ApiController
     {
-        public List<Individual> ListIndividual = new List<Individual>();
+        public static List<Individual> ListIndividual = new List<Individual>();
 
         // This method load all data to Individual
         [HttpGet]
@@ -73,6 +73,8 @@ namespace TakeHomeTestGGO.Controllers
 
             List<Individual> individuals = new List<Individual>();
             individuals.Add(ListIndividual.Find(x => x.RecordNumber.Equals(firstPerson)));
+            
+            ListIndividual.Remove(ListIndividual.Find(x=> x.RecordNumber.Equals(secondPerson)));
 
             string streetName = "";
             foreach (Individual item in individuals)
@@ -80,8 +82,8 @@ namespace TakeHomeTestGGO.Controllers
                 streetName = item.GetAddresses() + " - " + addresses[0].StreetName;
             }
 
-            ListIndividual.Find(x => x.RecordNumber.Equals(individuals[0].RecordNumber));
-            ListIndividual[0].addresses = streetName;
+            ListIndividual.Find(x => x.RecordNumber.Equals(firstPerson)).addresses = streetName;
+            // ListIndividual[0].addresses = streetName;
 
 
             return 1;

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TakeHomeTestGGO.Controllers;
 
 namespace TakeHomeTestGGO.Models
 {
@@ -21,7 +23,8 @@ namespace TakeHomeTestGGO.Models
 
         private static void loadIndividual()
         {
-            
+            Individual[] result = JsonConvert.DeserializeObject<Individual[]>(IndividualApiController.loadDataFromJsonFile("Individual.json"));
+
         }
 
         public string GetAddresses()

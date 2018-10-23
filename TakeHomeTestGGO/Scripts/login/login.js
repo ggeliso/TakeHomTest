@@ -28,6 +28,8 @@
                 if (textStatus = 'success') {
                     if (result == true) {
                         window.location.href = '/Individual/Person'
+                    } else {
+                        alert("Usuario o contraseña erradas");
                     }
                 } else if (textStatus = 'success'){
                     console.log("Error");
